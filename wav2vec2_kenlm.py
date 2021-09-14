@@ -65,7 +65,7 @@ beam_decoder = BeamCTCDecoder(vocab, lm_path=lm_path,
                                  blank_index=vocab.index(tokenizer.pad_token))
 
 
-gready_decoder = GreedyDecoder(vocab, blank_index=vocab.index(tokenizer.pad_token))
+greedy_decoder = GreedyDecoder(vocab, blank_index=vocab.index(tokenizer.pad_token))
 
 
 # load the test audio file
@@ -87,11 +87,11 @@ with torch.no_grad():
 print('Decoding using Beam Search Decoder....')
 beam_decoded_output, beam_decoded_offsets = beam_decoder.decode(logits)
 
-print('Decoding using Gready Decoder....')
-gready_decoded_output, gready_decoded_offsets = gready_decoder.decode(logits)
+print('Decoding using Greedy Decoder....')
+greedy_decoded_output, greedy_decoded_offsets = greedy_decoder.decode(logits)
 
 
-print('Gready Decoding Output:', gready_decoded_output[0][0])
+print('Greedy Decoding Output:', greedy_decoded_output[0][0])
 print('#'*85)
 print('Beam Search Decoding Output:', beam_decoded_output[0][0]) # print the top prediction of the beam search
 
