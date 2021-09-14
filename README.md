@@ -19,3 +19,9 @@ Finally, run the script and see the result:
 ```
 python wav2vec2_kenlm.py
 ```
+
+## Acknowledgments
+ This project uses the functionalities of different open-source projects that are mentioned below.
+* [CTC beam search decoder in C++ with PyTorch bindings](https://github.com/parlance/ctcdecode)
+* [decoder.py file](https://github.com/SeanNaren/deepspeech.pytorch)
+* [Another implementation of beam search decoder in pure Python](https://github.com/Wikidepia/wav2vec2-indonesian/blob/master/notebooks/kenlm-wav2vec2.ipynb)
