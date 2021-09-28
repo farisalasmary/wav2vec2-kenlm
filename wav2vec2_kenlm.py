@@ -34,9 +34,8 @@ MODEL_ID = "jonatasgrosman/wav2vec2-large-xlsr-53-english"
 print(f'Loading Wav2Vec2CTC Model: "{MODEL_ID}"')
 processor = Wav2Vec2Processor.from_pretrained(MODEL_ID)
 model = Wav2Vec2ForCTC.from_pretrained(MODEL_ID)
-tokenizer = Wav2Vec2CTCTokenizer.from_pretrained(MODEL_ID)
 
-vocab_dict = tokenizer.get_vocab()
+vocab_dict = processor.tokenizer.get_vocab()
 sort_vocab = sorted((value, key) for (key,value) in vocab_dict.items())
 
 # Lower case ALL letters
@@ -45,7 +44,7 @@ for _, token in sort_vocab:
     vocab.append(token.lower())
 
 # replace the word delimiter with a white space since the white space is used by the decoders
-vocab[vocab.index(tokenizer.word_delimiter_token)] = ' '
+vocab[vocab.index(processor.tokenizer.word_delimiter_token)] = ' '
 
 # you can download the following ARPA LM from this link:
 # "https://kaldi-asr.org/models/5/4gram_big.arpa.gz"
@@ -62,10 +61,10 @@ beam_decoder = BeamCTCDecoder(vocab, lm_path=lm_path,
                                  alpha=alpha, beta=beta,
                                  cutoff_top_n=40, cutoff_prob=1.0,
                                  beam_width=beam_width, num_processes=16,
-                                 blank_index=vocab.index(tokenizer.pad_token))
+                                 blank_index=vocab.index(processor.tokenizer.pad_token))
 
 
-greedy_decoder = GreedyDecoder(vocab, blank_index=vocab.index(tokenizer.pad_token))
+greedy_decoder = GreedyDecoder(vocab, blank_index=vocab.index(processor.tokenizer.pad_token))
 
 
 # load the test audio file
